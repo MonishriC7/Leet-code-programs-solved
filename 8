@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int myAtoi(string s) {
+
+        int i = 0;
+
+        while (i < s.size() && s[i] == ' ')
+            ++i;
+
+        bool negative = false;
+
+        if (i < s.size()) {
+            if (s[i] == '-') {
+                negative = true;
+                ++i;
+            }
+            else if (s[i] == '+') {
+                ++i;
+            }
+        }
+
+        int num = 0;
+
+        while (i < s.size() &&
+               s[i] >= '0' &&
+               s[i] <= '9')
+        {
+            if (num > 214748364 ||
+               (num == 214748364 &&
+                (s[i] - '0') > 7))
+            {
+                return negative
+                    ? INT_MIN
+                    : INT_MAX;
+            }
+
+            num = num * 10 + (s[i] - '0');
+            ++i;
+        }
+
+        return negative ? -num : num;
+    }
+};
